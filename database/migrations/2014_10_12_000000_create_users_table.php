@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('phone');
+            $table->string('username')->unique();
+            $table->string('image')->nullable();
+            $table->boolean('status')->default(1);
+            $table->enum('type', ['student', 'companymanager', 'companysupervisor', 'doctor', 'super-admin'])->default('student');
+            $table->foreignId('company_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
