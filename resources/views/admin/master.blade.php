@@ -18,6 +18,56 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   @yield('styles')
 
+  <style>
+    .main-header .navbar-nav .nav-item.lang img {
+      opacity: .5;
+      width: 20px
+    }
+
+    .main-header .navbar-nav .nav-item.lang .active img {
+        opacity: 1;
+        width: 23px;
+        box-shadow: 0 0 10px rgba(27, 27, 27, 0.732);
+    }
+
+  </style>
+
+
+@if (app()->getLocale() == 'ar')
+<style>
+  body {
+    direction: rtl;
+    text-align: right;
+  }
+  body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    margin-right: 250px;
+    margin-left: 0;
+  }
+
+  .nav-sidebar {
+    padding: 0
+  }
+
+  .nav-sidebar .nav-link>.right, .nav-sidebar .nav-link>p>.right {
+    left: 1rem;
+    right: unset;
+    transform: rotate(180deg)
+  }
+
+  .nav-sidebar .menu-is-opening>.nav-link i.right, .nav-sidebar .menu-is-opening>.nav-link svg.right, .nav-sidebar .menu-open>.nav-link i.right, .nav-sidebar .menu-open>.nav-link svg.right {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+
+  .ml-auto, .mx-auto {
+    margin-left: unset!important;
+    margin-right: auto!important;
+}
+</style>
+@endif
+
+
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -34,15 +84,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-      <ul>
+      {{-- {{ app()->getLocale() }} --}}
         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-            <li>
-                <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                    {{ $properties['native'] }}
+            <li class="nav-item lang">
+                <a class="nav-link {{ app()->getLocale() == $localeCode ? 'active' : '' }}" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                  <img width="25" src="{{ asset("adminassets/dist/img/".$properties['flag']) }}" alt="">
+                  {{-- @if ($localeCode == 'pt')
+                    <img width="30" src="{{ asset('adminassets/dist/img/pt.png') }}" alt="">
+                  @elseif ($localeCode == 'en')
+                    <img width="30" src="{{ asset('adminassets/dist/img/uk.png') }}" alt="">
+                  @else
+                    <img width="30" src="{{ asset('adminassets/dist/img/ps.png') }}" alt="">
+                  @endif --}}
+
+                    {{-- {{ $properties['native'] }} --}}
                 </a>
             </li>
         @endforeach
-    </ul>
 
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -75,7 +133,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         @php
-            $name = Auth::user()->name;
+            $name = Auth::user()->name??'';
             $src = 'https://ui-avatars.com/api/?background=random&name='.$name;
 
             if(Auth::user()->image) {
@@ -92,9 +150,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <i class="fas fa-user mr-2"></i> Profile
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="{{ route('logout') }}"
+          onclick="
+          event.preventDefault();
+          document.getElementById('logout-form').submit()
+          "
+          class="dropdown-item">
             <i class="fas fa-sign-out-alt mr-2"></i> Logout
           </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+            {{-- <button class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i> Logout</button> --}}
+          </form>
+
         </div>
       </li>
       <li class="nav-item">
