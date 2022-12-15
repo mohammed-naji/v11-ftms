@@ -1,5 +1,6 @@
 <?php
 
 return [
-    "Dashboard" => "Dashboard - برتغالي"
+    "Dashboard" => "Dashboard - برتغالي",
+    "Companies" => "Companies"
 ];

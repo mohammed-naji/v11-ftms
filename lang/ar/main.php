@@ -1,5 +1,6 @@
 <?php
 
 return [
-    "Dashboard" => "الرئيسية - جديد"
+    "Dashboard" => "الرئيسية - جديد",
+    "Companies" => "الشركات"
 ];

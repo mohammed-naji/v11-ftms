@@ -30,6 +30,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         box-shadow: 0 0 10px rgba(27, 27, 27, 0.732);
     }
 
+    .table .th,
+    .table td {
+      vertical-align: middle
+    }
   </style>
 
 
@@ -217,15 +221,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.companies.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
+                  <p>All Companies</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.companies.create') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
+                  <p>Add New</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin.companies.trash') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Trash</p>
                 </a>
               </li>
             </ul>
@@ -405,5 +415,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('adminassets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminassets/dist/js/adminlte.min.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

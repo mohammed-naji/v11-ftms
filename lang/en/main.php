@@ -1,5 +1,6 @@
 <?php
 
 return [
-    "Dashboard" => "Dashboard"
+    "Dashboard" => "Dashboard",
+    "Companies" => "Companies"
 ];
