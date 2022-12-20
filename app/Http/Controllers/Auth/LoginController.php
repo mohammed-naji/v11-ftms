@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -31,10 +32,13 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
+        // $url = Redirect::intended( '/' )->getTargetUrl();
+
+        // dd($url);
         if(Auth::user()->type == 'student'){
-            return '/';
+            return redirect()->intended('/');
         }else {
-            return '/admin';
+            return redirect()->intended('/admin');
         }
     }
 

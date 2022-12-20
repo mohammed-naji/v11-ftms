@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('company_id');
             $table->foreignId('user_id');
             $table->foreignId('course_id');
-            $table->string('name');
-            $table->boolean('status')->default(1);
+            $table->text('reason')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

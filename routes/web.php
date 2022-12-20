@@ -6,6 +6,7 @@ use App\Http\Controllers\RelationController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SiteController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('profile', [RelationController::class, 'profile']);
@@ -14,6 +15,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::prefix(LaravelLocalization::setLocale())->group(function() {
     Route::prefix('admin')->middleware('auth', 'check_user')->name('admin.')->group(function() {
         Route::get('/', [AdminController::class, 'index'])->name('index');
+
+        Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
+        Route::post('/settings', [AdminController::class, 'settings_store'])->name('settings_store');
 
         Route::get('companies/trash', [CompanyController::class, 'trash'])->name('companies.trash');
         Route::get('companies/{id}/restore', [CompanyController::class, 'restore'])->name('companies.restore');
@@ -25,7 +29,14 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
 
     });
 
-    Route::view('/', 'welcome');
+    // Route::view('/', 'welcome');
+    Route::name('ftms.')->group(function() {
+        Route::get('/', [SiteController::class, 'index'])->name('index');
+        Route::get('/company/{id}', [SiteController::class, 'company'])->name('company');
+        Route::get('/company/course/{id}', [SiteController::class, 'course'])->name('course');
+        Route::post('/company/course/{id}', [SiteController::class, 'course_apply'])->name('course_apply');
+    });
+
 
     Auth::routes(['verify' => true]);
 

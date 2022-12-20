@@ -12,4 +12,9 @@ class Company extends Model
 
     // protected $fillable = ['name', 'image', 'description', 'location'];
     protected $guarded = [];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

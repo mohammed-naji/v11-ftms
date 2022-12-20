@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image');
             $table->text('description')->nullable();
-            $table->date('start_data');
+            $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
         });
