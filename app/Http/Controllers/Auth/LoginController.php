@@ -36,9 +36,11 @@ class LoginController extends Controller
 
         // dd($url);
         if(Auth::user()->type == 'student'){
-            return redirect()->intended('/');
+            // return redirect()->intended('/');
+            return '/';
         }else {
-            return redirect()->intended('/admin');
+            // return redirect()->intended('/admin');
+            return '/admin';
         }
     }
 

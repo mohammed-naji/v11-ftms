@@ -11,14 +11,18 @@ class AppliedNotification extends Notification
 {
     use Queueable;
 
+    protected $name;
+    protected $course;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name, $course)
     {
-        //
+        $this->name = $name;
+        $this->course = $course;
     }
 
     /**
@@ -29,7 +33,13 @@ class AppliedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        $channel = ['database'];
+
+        if($notifiable->channels) {
+            $channel = explode(',', $notifiable->channels);
+        }
+
+        return $channel;
     }
 
     /**
@@ -46,6 +56,22 @@ class AppliedNotification extends Notification
                     ->line('Thank you for using our application!');
     }
 
+    // public function toDatabase($notifiable)
+    // {
+    //     return [
+    //         'msg' => 'New Student '.$this->name.' Apply on ' . $this->course,
+    //         'url' => url('/applications')
+    //     ];
+    // }
+
+    // public function toBroadcast($notifiable)
+    // {
+    //     return [
+    //         'msg' => 'New Student Mohammed Apply on Laravel Course - Broadcast',
+    //         'url' => url('/applications')
+    //     ];
+    // }
+
     /**
      * Get the array representation of the notification.
      *
@@ -55,7 +81,8 @@ class AppliedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'msg' => 'New Student '.$this->name.' Apply on ' . $this->course,
+            'url' => url('/applications')
         ];
     }
 }

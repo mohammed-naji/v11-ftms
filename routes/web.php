@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\NotifyController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\RelationController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\SiteController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('profile', [RelationController::class, 'profile']);
@@ -43,3 +44,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
 });
+
+
+Route::get('send-notify', [NotifyController::class, 'send']);
+Route::get('read-notify', [NotifyController::class, 'read']);
+Route::get('notify/{id}', [NotifyController::class, 'notify'])->name('mark-read');

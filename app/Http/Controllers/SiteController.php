@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Notifications\AppliedNotification;
 use App\Models\Company;
+use App\Models\User;
 use App\Models\Course;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -34,6 +36,7 @@ class SiteController extends Controller
 
     public function course_apply(Request $request, $id)
     {
+        $course = Course::find($id);
         // dd($request->all());
         Application::create([
             'company_id' => $request->company_id,
@@ -41,6 +44,12 @@ class SiteController extends Controller
             'course_id' => $id,
             'reason' => $request->reason
         ]);
+
+        $user = User::where('company_id', $request->company_id)->first();
+
+        // dd($request->company_id);
+
+        $user->notify( new AppliedNotification($request->user()->name, $course->name) );
 
         return redirect()->back()->with('msg', 'Your application has been submitted successfully');
     }
