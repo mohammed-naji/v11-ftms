@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\CompanyRequest;
 
 class CompanyController extends Controller
 {
@@ -45,8 +46,21 @@ class CompanyController extends Controller
         // $company->name = $request->name;
         // $company->save();
 
+        // $slug = strtolower($request->name);
+        // $slug = str_replace(' ', '-', $slug);
+
+        $slug = Str::slug($request->name);
+
+        $slugCount = Company::where('slug', 'like', $slug.'%')->count();
+
+        if($slugCount > 0) {
+            $slug = $slug . '-'.$slugCount;
+        }
+        // dd($slugCount);
+
         Company::create([
             'name' => $request->name,
+            'slug' => $slug,
             'image' => $path,
             'description' => $request->description,
             'location' => $request->location,

@@ -189,7 +189,7 @@
                             {{-- {!! $company->description !!} --}}
                         </div>
                         <div class="p-4">
-                            <a href="{{ route('ftms.company', $company->id) }}" class="btn btn-brand w-100">Read More</a>
+                            <a href="{{ route('ftms.company', $company->slug) }}" class="btn btn-brand w-100">Read More</a>
                         </div>
                     </article>
                     @endforeach
@@ -270,57 +270,27 @@ leo-messi-win-the-world-cup  --}}
                 </div>
             </div>
             <div class="row justify-content-center">
+                @foreach ($experts as $expert)
                 <div class="col-lg-4 col-md-8">
                     <div class="team-member">
                         <div class="image">
-                            <img src="{{ asset('siteassets/img/team_1.jpg') }}" alt="">
-                            <div class="social-icons">
+                            <img src="{{ $expert->image }}" alt="">
+                            {{-- <div class="social-icons">
                                 <a href="#"><i class='bx bxl-facebook'></i></a>
                                 <a href="#"><i class='bx bxl-twitter'></i></a>
                                 <a href="#"><i class='bx bxl-instagram'></i></a>
                                 <a href="#"><i class='bx bxl-pinterest'></i></a>
                             </div>
-                            <div class="overlay"></div>
+                            <div class="overlay"></div> --}}
                         </div>
 
-                        <h5>Marvin McKinney</h5>
-                        <p>Marketing Coordinator</p>
+                        <h5>{{ $expert->name }}</h5>
+                        <p>${{ $expert->hour_price }} per hour</p>
+                        <a class="btn btn-brand w-100" href="{{ route('ftms.expert', $expert->id) }}">Read More</a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-8">
-                    <div class="team-member">
-                        <div class="image">
-                            <img src="{{ asset('siteassets/img/team_2.jpg') }}" alt="">
-                            <div class="social-icons">
-                                <a href="#"><i class='bx bxl-facebook'></i></a>
-                                <a href="#"><i class='bx bxl-twitter'></i></a>
-                                <a href="#"><i class='bx bxl-instagram'></i></a>
-                                <a href="#"><i class='bx bxl-pinterest'></i></a>
-                            </div>
-                            <div class="overlay"></div>
-                        </div>
+                @endforeach
 
-                        <h5>Kathryn Murphy</h5>
-                        <p>Ethical Hacker</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-8">
-                    <div class="team-member">
-                        <div class="image">
-                            <img src="{{ asset('siteassets/img/team_3.jpg') }}" alt="">
-                            <div class="social-icons">
-                                <a href="#"><i class='bx bxl-facebook'></i></a>
-                                <a href="#"><i class='bx bxl-twitter'></i></a>
-                                <a href="#"><i class='bx bxl-instagram'></i></a>
-                                <a href="#"><i class='bx bxl-pinterest'></i></a>
-                            </div>
-                            <div class="overlay"></div>
-                        </div>
-
-                        <h5>Darrell Steward</h5>
-                        <p>Software Developer</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

@@ -50,4 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'status' => 'No Status Avialable'
         ]);
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

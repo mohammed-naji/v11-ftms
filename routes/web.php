@@ -8,6 +8,7 @@ use App\Http\Controllers\NotifyController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\RelationController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\EvaluationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('profile', [RelationController::class, 'profile']);
@@ -28,6 +29,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
 
         Route::resource('courses', CourseController::class);
 
+        Route::resource('evaluations', EvaluationController::class);
+
     });
 
     // Route::view('/', 'welcome');
@@ -36,6 +39,10 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
         Route::get('/company/{id}', [SiteController::class, 'company'])->name('company');
         Route::get('/company/course/{id}', [SiteController::class, 'course'])->name('course');
         Route::post('/company/course/{id}', [SiteController::class, 'course_apply'])->name('course_apply');
+        Route::get('/company/course/cancel/{id}', [SiteController::class, 'course_cancel'])->name('course_cancel');
+        Route::get('expert/{id}', [SiteController::class, 'expert'])->name('expert');
+        Route::post('book-time', [SiteController::class, 'book_time'])->name('book_time');
+        Route::get('book-time-status/{id}', [SiteController::class, 'book_time_status'])->name('book_time_status');
     });
 
 

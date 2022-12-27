@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('available_times', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('expert_id');
-            $table->date('date');
-            $table->time('hour_from');
-            $table->time('hour_to');
-            $table->boolean('status')->default(1);
-            $table->double('price', 10, 2)->nullable();
+            $table->foreignId('user_id');
+            $table->foreignId('time_id');
+            $table->double('total');
+            $table->string('transaction_id');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('available_times');
+        Schema::dropIfExists('payments');
     }
 };
