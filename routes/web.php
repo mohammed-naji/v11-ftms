@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\RelationController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\TestAPI;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('profile', [RelationController::class, 'profile']);
@@ -29,6 +30,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
 
         Route::resource('courses', CourseController::class);
 
+        Route::get('evaluations/applied', [EvaluationController::class, 'applied'])->name('evaluations.applied');
+        Route::get('evaluations/applied/{id}', [EvaluationController::class, 'applied_data'])->name('evaluations.applied_data');
         Route::resource('evaluations', EvaluationController::class);
 
     });
@@ -43,6 +46,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
         Route::get('expert/{id}', [SiteController::class, 'expert'])->name('expert');
         Route::post('book-time', [SiteController::class, 'book_time'])->name('book_time');
         Route::get('book-time-status/{id}', [SiteController::class, 'book_time_status'])->name('book_time_status');
+
+        Route::get('evaluation/{id}', [SiteController::class, 'evaluation'])->name('evaluation')->middleware('auth');
+        Route::post('evaluation_applied/{id}', [SiteController::class, 'evaluation_applied'])->name('evaluation_applied')->middleware('auth');
     });
 
 
@@ -56,3 +62,5 @@ Route::prefix(LaravelLocalization::setLocale())->group(function() {
 Route::get('send-notify', [NotifyController::class, 'send']);
 Route::get('read-notify', [NotifyController::class, 'read']);
 Route::get('notify/{id}', [NotifyController::class, 'notify'])->name('mark-read');
+
+Route::get('posts-api', [TestAPI::class, 'posts_api']);

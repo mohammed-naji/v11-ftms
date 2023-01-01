@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\AppliedEvaluation;
 use App\Models\AvailableTime;
 use App\Notifications\AppliedNotification;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Evaluation;
 use App\Models\Expert;
 use App\Models\Payment;
 use Exception;
@@ -168,6 +170,35 @@ class SiteController extends Controller
     {
         Application::destroy($id);
         return redirect()->back()->with('msg', 'Course Canceld Successfully');
+    }
+
+    public function evaluation($id)
+    {
+        $evaluation = Evaluation::findOrFail($id);
+
+        // if( date('d-m-Y') > '04-12-2022' ) {
+        //     dd('Expire');
+        // }
+
+        if($evaluation->type != Auth::user()->type && Auth::user()->type != 'super-admin') {
+            abort(403, 'You are not Authorize');
+        }
+
+        // dd(Auth::user());
+
+        return view('site.evaluation', compact('evaluation'));
+    }
+
+    public function evaluation_applied(Request $request, $id)
+    {
+        // dd($request->all());
+        AppliedEvaluation::create([
+            'user_id' => Auth::id(),
+            'evualtion_id' => $id,
+            'data' => json_encode($request->answer)
+        ]);
+
+        return redirect()->route('ftms.index');
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CompanyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('posts', function() {
     return 'Done';
 });
+
+Route::prefix('v1')->group(function() {
+    Route::get('companies', [CompanyController::class, 'index']);
+});
+
+Route::prefix('v2')->group(function() {
+    Route::get('companies', [CompanyController::class, 'index2']);
+});
+
+
